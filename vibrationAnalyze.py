@@ -7,17 +7,29 @@ from MAVProxy.modules.lib import grapher
 from MAVProxy.modules.lib import rline
 import math, re
 import numpy
+from MAVProxy.modules.lib.wxgrapheditor import GraphDefinition, GraphDialog
 
 
-if __name__ == "__main__":
+imeshift = 0
+mlog = mavutil.mavlink_connection('26.BIN', notimestamps=False, zero_time_base=False)
+#mavlog = mavmemlog.mavmemlog(mlog)
+mg = grapher.MavGraph()
+mg.axes = [1];
+mg.field_types = [set(['IMU'])]
+mg.fields = ['IMU.AccX']
+mg.first_only = [False]
+mg.msg_types = set(['IMU'])
+mg.multi = [False]
+mg.timeshift = [0]
+mg.x = [[]]
+mg.y = [[]]
+mg.add_mav(mlog)
+mg.process_mav(mlog, timeshift)
+mg.x[0][1]
 
-    mlog = mavutil.mavlink_connection('26.BIN', notimestamps=False, zero_time_base=False)
 
 
-
-
-
-# from LogAnalyzer import Test,TestResult
+	# from LogAnalyzer import Test,TestResult
 # import DataflashLog
 
 # import numpy
